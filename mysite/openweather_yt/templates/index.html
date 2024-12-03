@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.3/cerulean/bootstrap.min.css"
+        integrity="sha512-dQLT/B7byn2LjN/DN4zeBKpwGV6qbidV0XiMRWQOL7TGrV7FkZFldkGG+DGMU+CQnMTcRZlUI7GMWt1j6akNew=="
+        crossorigin="anonymous" />
+    <title>Django Weather App{% if city %} - {{ city }}{% endif %}</title>
+    <style>
+        /* Custom styles for green theme */
+        body {
+            background-color: #e8f5e9; /* Light green */
+        }
+
+        .navbar {
+            background-color: #2e7d32; /* Dark green */
+        }
+
+        .navbar a {
+            color: #ffffff;
+        }
+
+        .navbar a:hover {
+            color: #c8e6c9; /* Light green hover */
+        }
+
+        .btn-primary {
+            background-color: #4caf50; /* Medium green */
+            border-color: #388e3c; /* Dark green */
+        }
+
+        .btn-primary:hover {
+            background-color: #66bb6a; /* Light green hover */
+            border-color: #43a047;
+        }
+
+        .card {
+            border: 2px solid #4caf50; /* Medium green border */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* Slight upward shift */
+            box-shadow: 0px 4px 15px rgba(0, 128, 0, 0.2); /* Green shadow */
+        }
+
+        footer {
+            background-color: #2e7d32; /* Dark green */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        footer a {
+            color: #c8e6c9;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .space{
+            text-align: center;
+        }
+        .placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 200px); /* Adjust height to exclude navbar and footer */
+        color: #2e7d32; /* Dark green */
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark">
+        <div class="container">
+            <a href="../" class="navbar-brand">Django Weather App <span style="color: rgb(200, 230, 201);"><strong>- Django
+                        Framework</strong></span></a>
+            <a href="https://openweathermap.org" class="navbar-tech" target="_blank">OpenWeather - Get Your API</a>
+        </div>
+    </div>
+
+    <br /><br /><br>
+    <div id="jumbotron" class="jumbotron text-center" style="margin-top:-50px">
+        <h1 class="display-5">A Web Weather App</h1>
+        <h5>Built Using Python Language and Django Framework</h5>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <form method="post" class="col-md">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="city" class="sr-only">City</label>
+                <input type="text" id="city" class="form-control" name="city" placeholder="Choose Your City ...">
+                <div class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+    </nav>
+
+    <br><br>
+
+    <div class="row">
+        {% if country_code and coordinate and temp and pressure and humidity %}
+        <div class="col d-flex justify-content-center">
+            <div class="card text-dark bg-light mb-6">
+                <div class="card-body">
+                    <h4><span class="badge badge-success">Country Code:</span> {{ country_code }}</h4>
+                    <h4><span class="badge badge-success">Coordinates [X,Y]:</span> {{ coordinate }}</h4>
+                    <h4><span class="badge badge-success">Temperature in Celsius:</span> {{ temp }}</h4>
+                    <h4><span class="badge badge-success">Pressure:</span> {{ pressure }}</h4>
+                    <h4><span class="badge badge-success">Humidity:</span> {{ humidity }}</h4>
+                    <h4><span class="badge badge-success">Forecast:</span> {{ main }}
+                        <img src="http://openweathermap.org/img/w/{{ icon }}.png" alt="Image" style="width:70px">
+                    </h4>
+                    <h4><span class="badge badge-success">Description:</span> {{ description }}</h4>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Django Weather App | Built by <a href="https://damola7.github.io/portfolio.io/">Shotayo Jubril</a></p>
+    </footer>
+</body>
+
+</html>
